@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:SimpleEmployeeApp.ViewModels"
+             x:Class="SimpleEmployeeApp.Views.MainPage"
+             Title="Employee Manager" BackgroundColor="Black">
+
+    <ContentPage.BindingContext>
+        <viewModels:MainViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="10" RowSpacing="10">
+
+        <!-- Search Bar -->
+        <SearchBar Grid.Row="0"
+                   Placeholder="Search employees..."
+                   Text="{Binding SearchText}" 
+                   BackgroundColor="Black"/>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,0,30,0">
+
+            <!-- Employee List -->
+            <CollectionView Grid.Column="0"
+                            ItemsSource="{Binding Employees}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedEmployee}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeThickness="1"
+                                Stroke="White"
+                                Padding="10"
+                                Margin="0,5">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding FullName}" 
+                                       FontAttributes="Bold"
+                                       FontSize="16"/>
+                                <Label Text="{Binding Position}" 
+                                       TextColor="White"
+                                       FontSize="14"/>
+                                <Label Text="{Binding Department}" 
+                                       TextColor="White"
+                                       FontSize="12"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Employee Form -->
+            <Border Grid.Column="1"
+                    StrokeThickness="1"
+                    Stroke="White"
+                    Padding="15"
+                    IsVisible="{Binding IsEditing}" Margin='0,0,-40,0'>
+                <ScrollView>
+                    <VerticalStackLayout Spacing="10">
+
+                        <Label Text="{Binding CurrentEmployee.Id, StringFormat='{0}'}" 
+                               IsVisible="False"/>
+
+                        <Label Text="First Name" FontAttributes="Bold"/>
+                        <Entry Text="{Binding CurrentEmployee.FirstName}"
+                               Placeholder="Enter first name"/>
+
+                        <Label Text="Last Name" FontAttributes="Bold"/>
+                        <Entry Text="{Binding CurrentEmployee.LastName}"
+                               Placeholder="Enter last name"/>
+
+                        <Label Text="Email" FontAttributes="Bold"/>
+                        <Entry Text="{Binding CurrentEmployee.Email}"
+                               Placeholder="Enter email"
+                               Keyboard="Email"/>
+
+                        <Label Text="Department" FontAttributes="Bold"/>
+                        <Entry Text="{Binding CurrentEmployee.Department}"
+                               Placeholder="Enter department"/>
+
+                        <Label Text="Position" FontAttributes="Bold"/>
+                        <Entry Text="{Binding CurrentEmployee.Position}"
+                               Placeholder="Enter position"/>
+
+                        <Label Text="Salary" FontAttributes="Bold"/>
+                        <Entry Text="{Binding CurrentEmployee.Salary}"
+                               Placeholder="Enter salary"
+                               Keyboard="Numeric"/>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <CheckBox IsChecked="{Binding CurrentEmployee.IsActive}"/>
+                            <Label Text="Active Employee" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Button Grid.Column="0"
+                                    Text="Save"
+                                    Command="{Binding SaveCommand}"
+                                    BackgroundColor="#512BD4"
+                                    TextColor="White"/>
+                            <Button Grid.Column="1"
+                                    Text="Cancel"
+                                    Command="{Binding CancelCommand}"
+                                    BackgroundColor="Gray"
+                                    TextColor="White"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Border>
+        </Grid>
+
+        <!-- Action Buttons -->
+        <HorizontalStackLayout Grid.Row="2" 
+                               Spacing="10"
+                               HorizontalOptions="Center">
+            <Button Text="Add New"
+                    Command="{Binding AddCommand}"
+                    BackgroundColor="#512BD4"
+                    TextColor="White"
+                    WidthRequest="100"/>
+
+            <Button Text="Edit"
+                    Command="{Binding EditCommand}"
+                    BackgroundColor="#FFA500"
+                    TextColor="White"
+                    WidthRequest="100"
+                    IsEnabled="{Binding SelectedEmployee}"/>
+
+            <Button Text="Delete"
+                    Command="{Binding DeleteCommand}"
+                    BackgroundColor="#DC143C"
+                    TextColor="White"
+                    WidthRequest="100"
+                    IsEnabled="{Binding SelectedEmployee}"/>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>
