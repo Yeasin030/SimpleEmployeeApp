@@ -5,7 +5,7 @@ public partial class App : Application
     [Obsolete]
     public App()
     {
-        // Remove unnecessary assignment and call to missing InitializeComponent
+        InitializeComponent();
         MainPage = new NavigationPage(new Views.MainPage());
     }
 }

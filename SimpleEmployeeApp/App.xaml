@@ -3,10 +3,10 @@
              x:Class="SimpleEmployeeApp.App">
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#512BD4</Color>
-            <Color x:Key="Secondary">#FFA500</Color>
-            <Color x:Key="Danger">#DC143C</Color>
-            <Color x:Key="Light">Black</Color>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
